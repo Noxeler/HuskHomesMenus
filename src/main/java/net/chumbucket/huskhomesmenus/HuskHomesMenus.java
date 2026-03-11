@@ -28,9 +28,6 @@ public final class HuskHomesMenus extends JavaPlugin {
     private ConfirmRequestMenu confirmMenu;
     private HomesMenu homesMenu;
 
-    // ✅ Warps Menu
-    private WarpsMenu warpsMenu;
-
     // ✅ Update checker
     private UpdateChecker updateChecker;
     private UpdateNotifyOnJoinListener updateNotifyOnJoinListener;
@@ -39,9 +36,6 @@ public final class HuskHomesMenus extends JavaPlugin {
     private TeleportCommandInterceptListener interceptListener;
     private TeleportRequestToggleListener toggleListener;
     private HomesCommandInterceptListener homesInterceptListener;
-
-    // ✅ Warps intercept listener (toggle-respecting)
-    private WarpsCommandInterceptListener warpsInterceptListener;
 
     @Override
     public void onEnable() {
@@ -125,25 +119,6 @@ public final class HuskHomesMenus extends JavaPlugin {
         } catch (Throwable ignored) { }
     }
 
-    private void closeOpenWarpsMenus() {
-        try {
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p == null) continue;
-
-                Inventory top = null;
-                try { top = p.getOpenInventory().getTopInventory(); }
-                catch (Throwable ignored) {}
-
-                if (top == null) continue;
-
-                InventoryHolder holder = top.getHolder();
-                if (holder instanceof WarpsMenu.WarpsHolder) {
-                    try { p.closeInventory(); } catch (Throwable ignored) {}
-                }
-            }
-        } catch (Throwable ignored) { }
-    }
-
     private void initRuntime() {
         this.config = new HHMConfig(this);
         this.toggleManager = new ToggleManager(this);
@@ -159,12 +134,10 @@ public final class HuskHomesMenus extends JavaPlugin {
         // Menus
         this.confirmMenu = new ConfirmRequestMenu(this, config, playerCache);
         this.homesMenu = new HomesMenu(this, config);
-        this.warpsMenu = new WarpsMenu(this, config);
 
         // Register menu listeners
         Bukkit.getPluginManager().registerEvents(confirmMenu, this);
         Bukkit.getPluginManager().registerEvents(homesMenu, this);
-        Bukkit.getPluginManager().registerEvents(warpsMenu, this);
 
         // Intercepts
         this.interceptListener = new TeleportCommandInterceptListener(confirmMenu, config, toggleManager);
@@ -172,10 +145,6 @@ public final class HuskHomesMenus extends JavaPlugin {
 
         this.homesInterceptListener = new HomesCommandInterceptListener(homesMenu, toggleManager);
         Bukkit.getPluginManager().registerEvents(homesInterceptListener, this);
-
-        // ✅ Warps intercept listener (toggle ON/OFF behavior)
-        this.warpsInterceptListener = new WarpsCommandInterceptListener(warpsMenu, toggleManager, config);
-        Bukkit.getPluginManager().registerEvents(warpsInterceptListener, this);
 
         // ✅ FIX: remove unused plugin reference from TeleportRequestToggleListener
         this.toggleListener = new TeleportRequestToggleListener(toggleManager, messenger, config);
@@ -229,18 +198,12 @@ public final class HuskHomesMenus extends JavaPlugin {
         safeSetExecutor("home", new HomesCommand(homesMenu, config, toggleManager));
         safeSetExecutor("homes", new HomesCommand(homesMenu, config, toggleManager));
 
-        // ✅ Warp commands are in your plugin.yml, so bind them
-        WarpsCommand warpsCommand = new WarpsCommand(warpsMenu, config, toggleManager);
-        safeSetExecutor("warp", warpsCommand);
-        safeSetExecutor("warps", warpsCommand);
-
         ToggleCommands toggleCommands = new ToggleCommands(toggleManager, config);
         safeSetExecutor("tpatoggle", toggleCommands);
         safeSetExecutor("tpaheretoggle", toggleCommands);
         safeSetExecutor("tpmenu", toggleCommands);
         safeSetExecutor("tpauto", toggleCommands);
         safeSetExecutor("homemenu", toggleCommands);
-        safeSetExecutor("warpmenu", toggleCommands);
 
         // Admin command
         safeSetExecutor("hhm", new HHMCommand(this, config));
@@ -276,15 +239,11 @@ public final class HuskHomesMenus extends JavaPlugin {
         try { if (homesMenu != null) HandlerList.unregisterAll(homesMenu); } catch (Throwable ignored) { }
         try { if (homesInterceptListener != null) HandlerList.unregisterAll(homesInterceptListener); } catch (Throwable ignored) { }
 
-        try { if (warpsMenu != null) HandlerList.unregisterAll(warpsMenu); } catch (Throwable ignored) { }
-        try { if (warpsInterceptListener != null) HandlerList.unregisterAll(warpsInterceptListener); } catch (Throwable ignored) { }
-
         try { if (updateNotifyOnJoinListener != null) HandlerList.unregisterAll(updateNotifyOnJoinListener); } catch (Throwable ignored) { }
 
         // Close open inventories (best-effort)
         closeOpenConfirmMenus();
         closeOpenHomesMenus();
-        closeOpenWarpsMenus();
 
         try { if (messenger != null) messenger.disable(); } catch (Throwable ignored) { }
         try { PendingRequests.clearGlobalSkins(); } catch (Throwable ignored) { }
@@ -299,9 +258,6 @@ public final class HuskHomesMenus extends JavaPlugin {
 
         this.homesMenu = null;
         this.homesInterceptListener = null;
-
-        this.warpsMenu = null;
-        this.warpsInterceptListener = null;
 
         this.updateChecker = null;
         this.updateNotifyOnJoinListener = null;

@@ -70,10 +70,6 @@ public final class ToggleCommands implements CommandExecutor {
                 boolean on = toggles.toggleHomeMenu(p);
                 sendHomeMenuStatus(p, on);
             }
-            case "warpmenu" -> {
-                boolean on = toggles.toggleWarpMenu(p);
-                sendWarpMenuStatus(p, on);
-            }
             default -> {
                 // Unknown executor binding; ignore.
             }
@@ -131,20 +127,6 @@ public final class ToggleCommands implements CommandExecutor {
         if (!config.isEnabled(basePath + ".enabled", true)) return;
 
         String template = config.raw(basePath + ".text", "%color%Home Menu: %state%");
-        template = template
-                .replace("%color%", on ? "&a" : "&c")
-                .replace("%state%", on ? "&lON" : "&lOFF");
-
-        p.sendMessage(AMP.deserialize(config.prefix() + template));
-    }
-
-    private void sendWarpMenuStatus(Player p, boolean on) {
-        if (!config.isEnabled("messages.warps.show_status_lines.enabled", true)) return;
-
-        final String basePath = "messages.warps.warpmenu_status_line";
-        if (!config.isEnabled(basePath + ".enabled", true)) return;
-
-        String template = config.raw(basePath + ".text", "%color%Warp Menu: %state%");
         template = template
                 .replace("%color%", on ? "&a" : "&c")
                 .replace("%state%", on ? "&lON" : "&lOFF");

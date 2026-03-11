@@ -31,9 +31,6 @@ public final class ToggleManager {
     // ✅ toggle for whether to use the Homes GUI intercept (default ON)
     private final NamespacedKey keyHomeMenu;
 
-    // ✅ toggle for whether to use the Warps GUI intercept (default ON)
-    private final NamespacedKey keyWarpMenu;
-
     // ------------------------------------------------------------
     // ✅ Folia-safe cache (avoid touching PDC off-region-thread)
     // ------------------------------------------------------------
@@ -45,7 +42,6 @@ public final class ToggleManager {
         volatile boolean tpmenu = true;
         volatile boolean tpauto = false;
         volatile boolean homemenu = true;
-        volatile boolean warpmenu = true;
     }
 
     public ToggleManager(JavaPlugin plugin) {
@@ -56,7 +52,6 @@ public final class ToggleManager {
         this.keyTpMenu = new NamespacedKey(plugin, "tpmenu_on");
         this.keyTpAuto = new NamespacedKey(plugin, "tpauto_on");
         this.keyHomeMenu = new NamespacedKey(plugin, "homemenu_on");
-        this.keyWarpMenu = new NamespacedKey(plugin, "warpmenu_on");
     }
 
     // -------------------------
@@ -96,13 +91,6 @@ public final class ToggleManager {
         if (s == null) return true;
         refreshAsync(p);
         return s.homemenu;
-    }
-
-    public boolean isWarpMenuOn(Player p) {
-        State s = state(p);
-        if (s == null) return true;
-        refreshAsync(p);
-        return s.warpmenu;
     }
 
     // -------------------------
@@ -149,14 +137,6 @@ public final class ToggleManager {
         return now;
     }
 
-    public boolean toggleWarpMenu(Player p) {
-        State s = stateEnsure(p);
-        boolean now = !s.warpmenu;
-        s.warpmenu = now;
-        writeAsync(p, keyWarpMenu, now);
-        return now;
-    }
-
     // -------------------------
     // Setters (writes on player scheduler)
     // -------------------------
@@ -177,12 +157,6 @@ public final class ToggleManager {
         State s = stateEnsure(p);
         s.homemenu = on;
         writeAsync(p, keyHomeMenu, on);
-    }
-
-    public void setWarpMenuOn(Player p, boolean on) {
-        State s = stateEnsure(p);
-        s.warpmenu = on;
-        writeAsync(p, keyWarpMenu, on);
     }
 
     // -------------------------
@@ -223,7 +197,6 @@ public final class ToggleManager {
             s.tpmenu = readFlag(p, keyTpMenu, true);
             s.tpauto = readFlag(p, keyTpAuto, false);
             s.homemenu = readFlag(p, keyHomeMenu, true);
-            s.warpmenu = readFlag(p, keyWarpMenu, true);
         });
     }
 

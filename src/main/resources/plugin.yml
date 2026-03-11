@@ -60,19 +60,6 @@ commands:
     usage: /homemenu
     permission: huskhomesmenus.homemenu
 
-  warp:
-    description: Open warps GUI
-    usage: /warp
-    permission: huskhomesmenus.warp
-  warps:
-    description: Open warp GUI
-    usage: /warps
-    permission: huskhomesmenus.warp
-  warpmenu:
-    description: Toggle warp menu
-    usage: /warpmenu
-    permission: huskhomesmenus.warpmenu
-
 permissions:
   huskhomesmenus.*:
     description: Grants all HuskHomesMenus permissions
@@ -89,8 +76,6 @@ permissions:
       huskhomesmenus.tpauto: true
       huskhomesmenus.home: true
       huskhomesmenus.homemenu: true
-      huskhomesmenus.warp: true
-      huskhomesmenus.warpmenu: true
 
   huskhomesmenus.admin:
     description: Allows using /hhm version (and other admin info commands)
@@ -126,11 +111,4 @@ permissions:
     default: false
   huskhomesmenus.homemenu:
     description: Allows toggling homes menu
-    default: false
-
-  huskhomesmenus.warp:
-    description: Allows opening warp menu
-    default: false
-  huskhomesmenus.warpmenu:
-    description: Allows toggling warps menu
     default: false
