@@ -29,9 +29,9 @@ Home Menu:
 
 ![](image-1.png)
 
-Warp Menu:
+~~Warp Menu:~~
 
-![](image-2.png)
+~~![](image-2.png)~~
 
 ## Requirements
 
@@ -67,9 +67,9 @@ HuskHomesMenus provides GUI-enhanced wrappers and player preference toggles for 
 | `/home` | `/home` | Allows opening the home GUI menu | `huskhomesmenus.home` |
 | `/homes` | `/homes` | Allows opening the home GUI menu | `huskhomesmenus.home` |
 | `/homemenu` | `/homemenu` | Toggle the home menu | `huskhomesmenus.homemenu` |
-| `/warp` | `/warp` | Allows opening the warp GUI menu | `huskhomesmenus.warp` |
-| `/warps` | `/warps` | Allows opening the warp GUI menu | `huskhomesmenus.warp` |
-| `/warpmenu` | `/warpmenu` | Toggle the warp menu | `huskhomesmenus.warpmenu` |
+| ~~`/warp` | `/warp` | Allows opening the warp GUI menu | `huskhomesmenus.warp`~~ |
+| ~~`/warps` | `/warps` | Allows opening the warp GUI menu | `huskhomesmenus.warp`~~ |
+| ~~`/warpmenu` | `/warpmenu` | Toggle the warp menu | `huskhomesmenus.warpmenu`~~ |
 
 ## Permissions
 
@@ -88,8 +88,8 @@ All permissions default to **false** unless otherwise noted and are intended for
 | `huskhomesmenus.tpmenu` | Allows toggling the teleport request GUI menu | false |
 | `huskhomesmenus.home` | Allows opening the home menu | false |
 | `huskhomesmenus.homemenu` | Allows toggling the home GUI menu | false |
-| `huskhomesmenus.warp` | Allows opening the warp menu | false |
-| `huskhomesmenus.warpmenu` | Allows toggling the warp GUI menu | false |
+| ~~`huskhomesmenus.warp` | Allows opening the warp menu | false~~ |
+| ~~`huskhomesmenus.warpmenu` | Allows toggling the warp GUI menu | false~~ |
 | `huskhomesmenus.*` | Grants all HuskHomesMenus permissions | op |
 
 > **Note:** By default, players must be explicitly granted permissions to send **and accept** teleport requests.
